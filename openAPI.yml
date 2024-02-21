@@ -1,0 +1,79 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Query API",
+    "version": "1.0.0",
+    "description": "API for executing database queries."
+  },
+  "servers": [
+    {
+      "url": "https://4d66-78-58-36-253.ngrok-free.app"
+    }
+  ],
+  "paths": {
+    "/query": {
+      "post": {
+        "summary": "Execute a database query",
+        "description": "Allows the execution of a provided database query and returns the results.",
+        "security": [
+          {
+            "apiKey": [ ]
+          }
+        ],
+        "operationId": "executeQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "SQL query to be executed."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format."
+          },
+          "401": {
+            "description": "Unauthorized access."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey"
+      }
+    }
+  }
+}
