@@ -2,9 +2,10 @@
 
 ## Description
 
-This project is a Go application that uses PostgreSQL for data storage. Application has single endpoint that takes
-input as RAW SQL and returns the result of the query. The main purpose of this project is to demonstrate how we can 
-use custom GPT app to interact with the database.
+This project provides a Go application that allows you to send raw SQL queries directly to a PostgreSQL database. 
+It has a single endpoint designed to receive your SQL query and return the results. The primary goal of this project 
+is to demonstrate how custom GPT (Generative Pre-trained Transformer) applications can be used to interact with 
+databases in innovative ways.
 
 ## How it works:
 
@@ -17,14 +18,14 @@ use custom GPT app to interact with the database.
 
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Ngrok](https://ngrok.com/download) (optional)
+- [Ngrok](https://ngrok.com/download)
 
 ## Getting Started
 
 1. Clone the repository:
     ```
-    git clone https://github.com/username/project.git
-    cd project
+    git clone https://github.com/Clasyc/gpt-db-explorer
+    cd gpt-db-explorer
     ```
    
 2. Create a `.env` file in the root of the project:
@@ -32,32 +33,45 @@ use custom GPT app to interact with the database.
     mv .env.example .env
     ```
 
-3. Run the application:
+3. To build the application, launch the database, import sample data, and set up a read-only database user, execute 
+   the following command:
     ```
     make run
     ```
 
-4. Expose the application to the internet using Ngrok (optional):
+4.  For your custom GPT model to interact with your application, the application needs to be accessible from the public internet (not just your local machine). Ngrok provides a quick and easy way to achieve this.
     ```
     ngrok http $APP_CONTAINER_PORT
     ```
 
 ## Database Schema
 
-![Database Schema](scheme.png)
+This project uses a sample database schema and data taken from [github.com/morenoh149/postgresDBSamples](https://github.com/morenoh149/postgresDBSamples/tree/master/dellstore2-normal-1.0).
 
-The database schema is documented in detail in `doc.md`.
-This should be used as a context for GPT model so that it can generate SQL queries that are compatible with the database.
+![Database Schema](images/img01.png)
 
-### Sample Data
-
-Sample database schema and data is taken from 
-[this repository](https://github.com/morenoh149/postgresDBSamples/tree/master/dellstore2-normal-1.0)
+Detailed documentation of the database schema can be found in `doc.md`. This documentation is crucial for your GPT model.
+It will allow the model to generate SQL queries that are accurate and work correctly with the structure of the database.
 
 ## OpenAPI Specification
 
-The OpenAPI specification for the application is documented in `openapi.yaml`.
-This should be used as a reference for the API endpoint that GPT should interact with.
+This project includes an OpenAPI specification defined in `openAPI.yml`. This file is a crucial reference for your
+GPT model, as it describes the structure and details of the available API endpoint.
 
-> Note: The OpenAPI specification contains hardcoded URL, please replace it with your Ngrok URL. Before uploading
-> it to the GPT model.
+The OpenAPI specification will guide your GPT model in generating valid API requests and understanding the expected 
+response formats.
+
+> The OpenAPI specification contains a hardcoded URL. Before using it with your GPT model, replace this URL with your 
+> own Ngrok URL (this ensures your GPT model connects to the correct location).
+
+## Using an API Key for Authentication
+
+This application uses an API key to protect its endpoint. Here's how to set it up:
+
+1. Find Your API Key: The API key is located in the `.env` file. You can change this value if desired.
+2. Add the API Key to Your GPT Model: 
+   * In your custom GPT model, navigate to the Authentication section.
+   * Create a custom header named `X-API-Key`.
+   * Set the value of this header to the API key you found in the `.env` file.
+
+![GPT Authentication Settings](images/img02.png)
