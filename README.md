@@ -7,6 +7,8 @@ It has a single endpoint designed to receive your SQL query and return the resul
 is to demonstrate how custom GPT (Generative Pre-trained Transformer) applications can be used to interact with 
 databases in innovative ways.
 
+![Overview](images/img03.png)
+
 ## How it works:
 
 1. GPT generates a SQL query based on the user input.
